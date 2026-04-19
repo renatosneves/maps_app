@@ -226,7 +226,7 @@ function WorldMap({
       </div>
 
       <ComposableMap
-        projection={projection}
+        projection={projection as unknown as string}
         style={{ width: '100%', height: '100%' }}
         className="h-full w-full"
       >
