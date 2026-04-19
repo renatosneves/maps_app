@@ -32,11 +32,12 @@ export default function QuizScreen() {
   const regionLabel = getRegionLabel(regionFilter, language);
   const activeSelection = selectionQuestionIndex === currentIndex ? selectedFeature : null;
   const localizedSelection = activeSelection ? getLocalizedMapSelection(activeSelection, language) : null;
+  const shouldHideCurrentTarget = mode === 'click' && feedbackState === 'none' && !activeSelection;
   const mapFocusId =
     activeSelection?.id
     ?? highlightedId
     ?? correctAnswerId
-    ?? current?.id
+    ?? (shouldHideCurrentTarget ? null : current?.id)
     ?? null;
 
   useEffect(() => {
