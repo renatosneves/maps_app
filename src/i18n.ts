@@ -3,6 +3,7 @@ import { mountains } from './data/mountains';
 import { seas } from './data/seas';
 import type {
   Country,
+  MapFocusZoneId,
   MapFeatureKind,
   MapSelection,
   OceanName,
@@ -123,6 +124,45 @@ const mountainRangeSv: Record<string, string> = {
   'Southern Alps': 'Sydalperna',
   'Great Dividing Range': 'Great Dividing Range',
   'Sentinel Range': 'Sentinel Range',
+};
+
+const focusZoneLabels: Record<Language, Record<MapFocusZoneId, string>> = {
+  en: {
+    world: 'World atlas',
+    'europe-overview': 'Europe',
+    'south-america-overview': 'South America',
+    'oceania-overview': 'Oceania',
+    'north-america-overview': 'North America',
+    'north-america-caribbean': 'Caribbean',
+    'africa-overview': 'Africa',
+    'africa-atlantic-islands': 'Atlantic islands',
+    'africa-indian-ocean-islands': 'Indian Ocean islands',
+    'asia-overview': 'Asia',
+    'asia-west': 'West Asia',
+    'asia-central': 'Central Asia',
+    'asia-south': 'South Asia',
+    'asia-east': 'East Asia',
+    'asia-southeast-mainland': 'SE Asia mainland',
+    'asia-southeast-maritime': 'SE Asia maritime',
+  },
+  sv: {
+    world: 'Världsatlas',
+    'europe-overview': 'Europa',
+    'south-america-overview': 'Sydamerika',
+    'oceania-overview': 'Oceanien',
+    'north-america-overview': 'Nordamerika',
+    'north-america-caribbean': 'Karibien',
+    'africa-overview': 'Afrika',
+    'africa-atlantic-islands': 'Atlantöar',
+    'africa-indian-ocean-islands': 'Indiska oceanens öar',
+    'asia-overview': 'Asien',
+    'asia-west': 'Västasien',
+    'asia-central': 'Centralasien',
+    'asia-south': 'Sydasien',
+    'asia-east': 'Östasien',
+    'asia-southeast-mainland': 'Fastlands-Sydostasien',
+    'asia-southeast-maritime': 'Maritima Sydostasien',
+  },
 };
 
 const milestoneTier = {
@@ -297,6 +337,11 @@ export const ui = {
     zoomIn: 'Zoom in',
     zoomOut: 'Zoom out',
     reset: 'Reset',
+    atlasNavigator: 'Atlas navigator',
+    atlasHint: 'Drag the atlas, pinch to zoom, and jump into focused views for dense regions.',
+    currentFocus: 'Current focus',
+    focusJump: 'Open focus',
+    focusTargets: 'Focus targets',
     marineRegion: 'Marine region',
     country: 'country',
     sea: 'sea',
@@ -431,6 +476,11 @@ export const ui = {
     zoomIn: 'Zooma in',
     zoomOut: 'Zooma ut',
     reset: 'Återställ',
+    atlasNavigator: 'Atlasnavigering',
+    atlasHint: 'Dra atlasen, nyp för att zooma och hoppa in i fokuserade vyer för täta regioner.',
+    currentFocus: 'Aktuellt fokus',
+    focusJump: 'Öppna fokus',
+    focusTargets: 'Fokusmål',
     marineRegion: 'Havsområde',
     country: 'land',
     sea: 'hav',
@@ -461,6 +511,10 @@ export function getRegionLabelFromKey(regionKey: string, language: Language) {
   if (type === 'continent') return getContinentLabel(value as keyof typeof continentLabels.en, language);
   if (type === 'ocean') return getOceanLabel(value as OceanName, language);
   return regionKey;
+}
+
+export function getFocusZoneLabel(zoneId: MapFocusZoneId, language: Language) {
+  return focusZoneLabels[language][zoneId];
 }
 
 export function getCountryName(country: Country, language: Language) {
