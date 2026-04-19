@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { geoMercator } from 'd3-geo';
 import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
 import { mountains } from '../../data/mountains';
 import { seas } from '../../data/seas';
@@ -66,6 +67,15 @@ function getProjectionConfig(filter: RegionFilter) {
   }
 
   return { center: [0, 20] as [number, number], scale: 150 };
+}
+
+const MAP_WIDTH = 800;
+const MAP_HEIGHT = 600;
+
+function buildProjection(center: [number, number], scale: number) {
+  const base = geoMercator().scale(scale).translate([0, 0]);
+  const offset = base(center)!;
+  return base.translate([MAP_WIDTH / 2 - offset[0], MAP_HEIGHT / 2 - offset[1]]);
 }
 
 function buildCountrySelection(geoId: string, language: 'sv' | 'en'): MapSelection | null {
@@ -155,6 +165,10 @@ function WorldMap({
   const [zoom, setZoom] = useState(1);
   const copy = ui[language];
   const projConfig = useMemo(() => getProjectionConfig(filter), [filter]);
+  const projection = useMemo(
+    () => buildProjection(projConfig.center, projConfig.scale * zoom),
+    [projConfig, zoom],
+  );
 
   const filteredSeas = useMemo(() => {
     if (filter.type === 'ocean') return seas.filter((sea) => sea.ocean === filter.value);
@@ -212,52 +226,54 @@ function WorldMap({
       </div>
 
       <ComposableMap
-        projection="geoMercator"
-        projectionConfig={{
-          center: projConfig.center,
-          scale: projConfig.scale * zoom,
-        }}
+        projection={projection}
         style={{ width: '100%', height: '100%' }}
         className="h-full w-full"
       >
         <Geographies geography={GEO_URL}>
           {({ geographies }) =>
-            geographies.map((geo) => {
-              const geoId = geo.id;
-              const interactive = isCountryInRegion(geoId, filter);
-              const fill = getCountryFill(
-                geoId,
-                filter,
-                highlightedId,
-                feedbackState,
-                correctAnswerId,
-                currentItemId,
-                mode,
-                knownIds,
-                guidedHighlightId,
-                selectedFeatureId,
-              );
+            [...geographies]
+              .sort((a, b) => {
+                const aIn = isCountryInRegion(a.id, filter) ? 1 : 0;
+                const bIn = isCountryInRegion(b.id, filter) ? 1 : 0;
+                return aIn - bIn;
+              })
+              .map((geo) => {
+                const geoId = geo.id;
+                const interactive = isCountryInRegion(geoId, filter);
+                const fill = getCountryFill(
+                  geoId,
+                  filter,
+                  highlightedId,
+                  feedbackState,
+                  correctAnswerId,
+                  currentItemId,
+                  mode,
+                  knownIds,
+                  guidedHighlightId,
+                  selectedFeatureId,
+                );
 
-              return (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  fill={fill}
-                  stroke={selectedFeatureId === geoId ? '#0f172a' : '#fff'}
-                  strokeWidth={selectedFeatureId === geoId ? 1.2 : 0.5}
-                  style={{
-                    default: { outline: 'none' },
-                    hover: { outline: 'none' },
-                    pressed: { outline: 'none' },
-                  }}
-                  onClick={() => {
-                    if (!interactive) return;
-                    onSelectFeature?.(buildCountrySelection(geoId, language));
-                    onCountryClick?.(geoId);
-                  }}
-                />
-              );
-            })
+                return (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    fill={fill}
+                    stroke={selectedFeatureId === geoId ? '#0f172a' : '#fff'}
+                    strokeWidth={selectedFeatureId === geoId ? 1.2 : 0.5}
+                    style={{
+                      default: { outline: 'none' },
+                      hover: { outline: 'none' },
+                      pressed: { outline: 'none' },
+                    }}
+                    onClick={() => {
+                      if (!interactive) return;
+                      onSelectFeature?.(buildCountrySelection(geoId, language));
+                      onCountryClick?.(geoId);
+                    }}
+                  />
+                );
+              })
           }
         </Geographies>
 
