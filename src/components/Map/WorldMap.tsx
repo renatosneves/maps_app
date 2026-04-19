@@ -168,6 +168,11 @@ function WorldMap({
     return mountains;
   }, [filter, showMountains]);
 
+  const fallbackCountries = useMemo(
+    () => getCountryMarkerCountries().filter((country) => isCountryInRegion(country.id, filter)),
+    [filter],
+  );
+
   return (
     <div className={fillHeight ? 'map-stage map-stage-fill' : 'map-stage'}>
       <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-28 bg-[linear-gradient(180deg,rgba(255,255,255,0.44),transparent)]" />
@@ -216,14 +221,8 @@ function WorldMap({
         className="h-full w-full"
       >
         <Geographies geography={GEO_URL}>
-          {({ geographies }) => {
-            const fallbackCountries = getCountryMarkerCountries(geographies.map((geo) => geo.id)).filter((country) =>
-              isCountryInRegion(country.id, filter),
-            );
-
-            return (
-              <>
-                {geographies.map((geo) => {
+          {({ geographies }) =>
+            geographies.map((geo) => {
               const geoId = geo.id;
               const interactive = isCountryInRegion(geoId, filter);
               const fill = getCountryFill(
@@ -258,62 +257,60 @@ function WorldMap({
                   }}
                 />
               );
-                })}
-
-                {fallbackCountries.map((country) => {
-                  const fill = getCountryFill(
-                    country.id,
-                    filter,
-                    highlightedId,
-                    feedbackState,
-                    correctAnswerId,
-                    currentItemId,
-                    mode,
-                    knownIds,
-                    guidedHighlightId,
-                    selectedFeatureId,
-                  );
-                  const isSelected = selectedFeatureId === country.id;
-
-                  return (
-                    <Marker key={country.id} coordinates={country.mapMarkerCoordinates}>
-                      <circle
-                        r={18}
-                        fill="transparent"
-                        onClick={() => {
-                          onSelectFeature?.(buildCountrySelection(country.id, language));
-                          onCountryClick?.(country.id);
-                        }}
-                      />
-                      <circle
-                        r={isSelected ? 7 : 5.5}
-                        fill={fill}
-                        stroke={isSelected ? '#0f172a' : '#fff'}
-                        strokeWidth={isSelected ? 1.5 : 1.1}
-                        style={{ pointerEvents: 'none' }}
-                      />
-                      {(showLabels || mode === 'study') && (
-                        <text
-                          textAnchor="middle"
-                          y={-10}
-                          style={{
-                            fontFamily: 'Manrope, sans-serif',
-                            fontSize: 6.5,
-                            fill: '#0f172a',
-                            fontWeight: 800,
-                            pointerEvents: 'none',
-                          }}
-                        >
-                          {getCountryName(country, language)}
-                        </text>
-                      )}
-                    </Marker>
-                  );
-                })}
-              </>
-            );
-          }}
+            })
+          }
         </Geographies>
+
+        {fallbackCountries.map((country) => {
+          const fill = getCountryFill(
+            country.id,
+            filter,
+            highlightedId,
+            feedbackState,
+            correctAnswerId,
+            currentItemId,
+            mode,
+            knownIds,
+            guidedHighlightId,
+            selectedFeatureId,
+          );
+          const isSelected = selectedFeatureId === country.id;
+
+          return (
+            <Marker key={country.id} coordinates={country.mapMarkerCoordinates}>
+              <circle
+                r={18}
+                fill="transparent"
+                onClick={() => {
+                  onSelectFeature?.(buildCountrySelection(country.id, language));
+                  onCountryClick?.(country.id);
+                }}
+              />
+              <circle
+                r={isSelected ? 7 : 5.5}
+                fill={fill}
+                stroke={isSelected ? '#0f172a' : '#fff'}
+                strokeWidth={isSelected ? 1.5 : 1.1}
+                style={{ pointerEvents: 'none' }}
+              />
+              {(showLabels || mode === 'study') && (
+                <text
+                  textAnchor="middle"
+                  y={-10}
+                  style={{
+                    fontFamily: 'Manrope, sans-serif',
+                    fontSize: 6.5,
+                    fill: '#0f172a',
+                    fontWeight: 800,
+                    pointerEvents: 'none',
+                  }}
+                >
+                  {getCountryName(country, language)}
+                </text>
+              )}
+            </Marker>
+          );
+        })}
 
         {filteredSeas.map((sea) => {
           const isSelected = selectedFeatureId === sea.id;
