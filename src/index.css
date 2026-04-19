@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap');
+@import "tailwindcss";
+
+:root {
+  font-family: 'Manrope', sans-serif;
+  color: #0f172a;
+  background:
+    radial-gradient(circle at top, rgba(219, 234, 254, 0.8), transparent 38%),
+    linear-gradient(180deg, #f7fbff 0%, #eef6ff 45%, #fff8ef 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Manrope', sans-serif;
+  color: #0f172a;
+  background: transparent;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  touch-action: manipulation;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.font-display {
+  font-family: 'Sora', sans-serif;
+  letter-spacing: -0.05em;
+  line-height: 0.98;
+}
+
+.panel-card {
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.84);
+  border-radius: 30px;
+  padding: 1.4rem;
+  box-shadow:
+    0 20px 50px rgba(148, 163, 184, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px);
+}
+
+.map-stage {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background:
+    radial-gradient(circle at top, rgba(239, 246, 255, 0.96), transparent 48%),
+    linear-gradient(180deg, #f8fbff 0%, #edf6ff 100%);
+  box-shadow: 0 28px 90px rgba(30, 64, 175, 0.14);
+  min-height: clamp(360px, 62vh, 760px);
+}
+
+.map-stage-fill {
+  height: 100%;
+  min-height: 0;
+}
+
+@media (max-width: 1279px) {
+  .map-stage {
+    min-height: clamp(340px, 54vh, 640px);
+  }
+}
+
+@media (max-width: 767px) {
+  .map-stage {
+    min-height: 320px;
+    border-radius: 26px;
+  }
+}
+
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.touch-primary,
+.touch-secondary,
+.segmented-active,
+.segmented-idle,
+.region-card,
+.region-card-active,
+.map-control {
+  display: inline-flex;
+  min-height: 3.25rem;
+  align-items: center;
+  gap: 0.65rem;
+  border-radius: 1.2rem;
+  padding: 0.9rem 1.2rem;
+  font-weight: 700;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.touch-primary:hover,
+.touch-secondary:hover,
+.segmented-active:hover,
+.segmented-idle:hover,
+.region-card:hover,
+.region-card-active:hover,
+.map-control:hover {
+  transform: translateY(-1px);
+}
+
+.touch-primary {
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.25);
+}
+
+.touch-primary:hover {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.touch-secondary {
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: rgba(255, 255, 255, 0.82);
+  color: #334155;
+  box-shadow: 0 10px 24px rgba(148, 163, 184, 0.12);
+}
+
+.segmented-active {
+  border: 1px solid #0f172a;
+  background: #0f172a;
+  color: #fff;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.2);
+}
+
+.segmented-idle {
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(255, 255, 255, 0.78);
+  color: #475569;
+}
+
+.region-card,
+.region-card-active {
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.92));
+  box-shadow: 0 14px 34px rgba(148, 163, 184, 0.12);
+}
+
+.region-card-active {
+  border-color: rgba(15, 23, 42, 0.9);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(219, 234, 254, 0.92));
+  box-shadow: 0 20px 44px rgba(37, 99, 235, 0.18);
+}
+
+.map-control {
+  justify-content: center;
+  min-width: 3.25rem;
+  min-height: 3.25rem;
+  border: 1px solid rgba(148, 163, 184, 0.26);
+  background: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
+  box-shadow: 0 10px 24px rgba(148, 163, 184, 0.18);
+  backdrop-filter: blur(16px);
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid rgba(59, 130, 246, 0.35);
+  outline-offset: 2px;
+}

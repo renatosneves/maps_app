@@ -1,0 +1,25 @@
+- generic [ref=e42]:
+  - generic [ref=e43]:
+    - button "← Back" [ref=e44]
+    - generic [ref=e45]: Europe · Click Quiz
+    - button "⛰️ Mountains" [active] [ref=e46]
+  - generic [ref=e47]:
+    - generic [ref=e49]:
+      - generic [ref=e50]: Question 8 of 45
+      - generic [ref=e51]: "Score: 5/7"
+    - generic [ref=e252]: 🔥 4 streak!
+  - generic [ref=e54]:
+    - paragraph [ref=e55]: "Click on the map:"
+    - paragraph [ref=e56]: Slovakia
+  - img [ref=e64]:
+    - generic [ref=e67]:
+      - generic [ref=e256]:
+        - generic: Mt. Elbrus
+      - generic [ref=e258]:
+        - generic: Mont Blanc
+      - generic [ref=e260]:
+        - generic: Matterhorn
+      - generic [ref=e262]:
+        - generic: Mt. Etna
+      - generic [ref=e264]:
+        - generic: Mt. Olympus

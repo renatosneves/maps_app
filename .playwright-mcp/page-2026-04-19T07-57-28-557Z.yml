@@ -1,0 +1,24 @@
+- generic [ref=e42]:
+  - generic [ref=e43]:
+    - button "← Back" [ref=e44]
+    - generic [ref=e45]: Europe · Study Mode
+  - generic [ref=e47]:
+    - generic [ref=e48]: "Mastery: 1 / 45"
+    - button "Reset progress" [ref=e243]
+  - generic [ref=e50]:
+    - button "Free Explore" [ref=e51]
+    - button "Guided Tour" [active] [ref=e52]
+  - generic [ref=e245]:
+    - generic [ref=e246]:
+      - generic [ref=e247]:
+        - generic [ref=e248]: 🇦🇱
+        - generic [ref=e249]:
+          - heading "Albania" [level=3] [ref=e251]
+          - paragraph [ref=e252]: "Capital: Tirana"
+      - generic [ref=e253]: 1 / 45
+    - generic [ref=e254]:
+      - button "← Prev" [disabled] [ref=e255]
+      - button "✓ I know this — Next" [ref=e256]
+      - button "Skip →" [ref=e257]
+      - generic [ref=e258]: "Keys: ←/→ navigate · Enter mark known"
+  - img [ref=e61]

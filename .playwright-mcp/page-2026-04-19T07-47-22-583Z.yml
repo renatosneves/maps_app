@@ -1,0 +1,37 @@
+- generic [ref=e245]:
+  - generic [ref=e246]:
+    - heading "🌍 GeoQuiz" [level=1] [ref=e247]
+    - paragraph [ref=e248]: Master the countries and seas of the world
+  - generic [ref=e249]:
+    - heading "Choose a region" [level=2] [ref=e250]
+    - generic [ref=e251]:
+      - heading "Continents" [level=3] [ref=e252]
+      - generic [ref=e253]:
+        - button "Africa" [ref=e254]
+        - button "Asia" [ref=e255]
+        - button "Europe" [ref=e256]
+        - button "N. America" [ref=e257]
+        - button "S. America" [ref=e258]
+        - button "Oceania" [ref=e259]
+    - generic [ref=e260]:
+      - heading "Oceans" [level=3] [ref=e261]
+      - generic [ref=e262]:
+        - button "Atlantic" [ref=e263]
+        - button "Pacific" [ref=e264]
+        - button "Indian" [ref=e265]
+        - button "Arctic" [ref=e266]
+        - button "Southern" [ref=e267]
+    - button "🌐 All (World)" [ref=e268]
+  - generic [ref=e269]:
+    - heading "Choose a mode" [level=2] [ref=e270]
+    - generic [ref=e271]:
+      - button "🖱️ Click Quiz Click the country on the map" [ref=e272]:
+        - generic [ref=e273]: 🖱️ Click Quiz
+        - generic [ref=e274]: Click the country on the map
+      - button "⌨️ Type Quiz Type the name of the highlighted area" [ref=e275]:
+        - generic [ref=e276]: ⌨️ Type Quiz
+        - generic [ref=e277]: Type the name of the highlighted area
+      - button "📖 Study Explore the map with labels" [ref=e278]:
+        - generic [ref=e279]: 📖 Study
+        - generic [ref=e280]: Explore the map with labels
+  - button "Start Quiz" [ref=e282]
