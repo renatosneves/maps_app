@@ -45,7 +45,7 @@ function getProjectionConfig(filter: RegionFilter) {
   if (filter.type === 'continent') {
     const configs: Record<string, { center: [number, number]; scale: number }> = {
       Africa: { center: [20, 0], scale: 350 },
-      Asia: { center: [90, 30], scale: 280 },
+      Asia: { center: [85, 30], scale: 210 },
       Europe: { center: [15, 54], scale: 600 },
       'North America': { center: [-100, 45], scale: 300 },
       'South America': { center: [-60, -15], scale: 350 },
@@ -75,7 +75,9 @@ const MAP_HEIGHT = 600;
 function buildProjection(center: [number, number], scale: number) {
   const base = geoMercator().scale(scale).translate([0, 0]);
   const offset = base(center)!;
-  return base.translate([MAP_WIDTH / 2 - offset[0], MAP_HEIGHT / 2 - offset[1]]);
+  return base
+    .translate([MAP_WIDTH / 2 - offset[0], MAP_HEIGHT / 2 - offset[1]])
+    .clipExtent([[0, 0], [MAP_WIDTH, MAP_HEIGHT]]);
 }
 
 function buildCountrySelection(geoId: string, language: 'sv' | 'en'): MapSelection | null {
@@ -236,7 +238,8 @@ function WorldMap({
               .sort((a, b) => {
                 const aIn = isCountryInRegion(a.id, filter) ? 1 : 0;
                 const bIn = isCountryInRegion(b.id, filter) ? 1 : 0;
-                return aIn - bIn;
+                if (aIn !== bIn) return aIn - bIn;
+                return (b.svgPath?.length ?? 0) - (a.svgPath?.length ?? 0);
               })
               .map((geo) => {
                 const geoId = geo.id;
