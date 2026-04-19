@@ -36,7 +36,8 @@ export default function QuizScreen() {
     activeSelection?.id
     ?? highlightedId
     ?? correctAnswerId
-    ?? (mode === 'type' && feedbackState === 'none' ? current?.id ?? null : null);
+    ?? current?.id
+    ?? null;
 
   useEffect(() => {
     const inspectedId =
@@ -56,64 +57,66 @@ export default function QuizScreen() {
   }, [currentIndex, mode, selectedFeature, selectionQuestionIndex]);
 
   return (
-    <div className="mx-auto max-w-[1760px] px-3 py-3 sm:px-5 lg:px-6 lg:py-5">
-      <div className="overflow-hidden rounded-[34px] border border-white/65 bg-[linear-gradient(135deg,rgba(248,250,252,0.97),rgba(239,246,255,0.98))] p-4 shadow-[0_30px_120px_rgba(15,23,42,0.12)] sm:p-5">
-        <div className="relative mb-6 overflow-hidden rounded-[28px] border border-white/70 bg-[linear-gradient(120deg,rgba(15,23,42,0.96),rgba(30,41,59,0.92)_58%,rgba(3,105,161,0.88))] px-5 py-5 text-white shadow-[0_30px_90px_rgba(15,23,42,0.28)] sm:px-6">
-          <div className="absolute inset-y-0 right-0 w-48 bg-[radial-gradient(circle_at_top_right,rgba(250,204,21,0.34),transparent_55%)]" />
-          <div className="relative flex flex-wrap items-center gap-3">
+    <div className="mx-auto max-w-[1820px] px-3 py-3 sm:px-4 lg:px-5 lg:py-4">
+      <div className="atlas-shell">
+        <header className="atlas-header">
+          <div className="flex min-w-0 flex-wrap items-center gap-3">
             <button
               type="button"
               onClick={goHome}
-              className="touch-secondary border-white/15 bg-white/10 text-white hover:bg-white/15"
+              className="touch-secondary min-h-[2.9rem] rounded-[1rem] px-4 py-2.5 text-[0.95rem]"
             >
               {copy.back}
             </button>
-            <div className="min-w-0 flex-1">
-              <p className="section-label text-sky-200">{copy.quizFloor}</p>
-              <h1 className="font-display mt-1 text-3xl text-white sm:text-4xl">{regionLabel}</h1>
+            <div className="min-w-0">
+              <p className="section-label">{copy.quizFloor}</p>
+              <h1 className="font-display mt-1 text-3xl text-slate-950 sm:text-[2.6rem]">{regionLabel}</h1>
             </div>
-            <div className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold uppercase tracking-[0.2em] text-sky-100">
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="atlas-stat-chip bg-slate-950 text-white">
               {mode === 'click' ? copy.tapChallenge : copy.typeChallenge}
-            </div>
+            </span>
             <button
               type="button"
               onClick={() => setShowMountains((value) => !value)}
               className={
                 showMountains
-                  ? 'touch-primary bg-amber-500 hover:bg-amber-400'
-                  : 'touch-secondary border-white/15 bg-white/10 text-white hover:bg-white/15'
+                  ? 'touch-primary min-h-[2.85rem] rounded-[1rem] bg-amber-500 px-4 py-2.5 text-[0.95rem] hover:bg-amber-400'
+                  : 'touch-secondary min-h-[2.85rem] rounded-[1rem] px-4 py-2.5 text-[0.95rem]'
               }
             >
               {showMountains ? copy.hideMountains : copy.showMountains}
             </button>
           </div>
-          <div className="relative mt-5 flex flex-wrap items-center gap-3 text-sm text-slate-200">
-            <span className="rounded-full border border-white/12 bg-white/10 px-3 py-1.5">
-              {copy.noReveal}
-            </span>
-            <span className="rounded-full border border-white/12 bg-white/10 px-3 py-1.5">
-              {copy.selectionPinned}
-            </span>
-          </div>
-        </div>
+        </header>
 
-        <div className="grid gap-5 xl:grid-cols-[minmax(0,1.95fr)_minmax(340px,390px)] 2xl:grid-cols-[minmax(0,2.15fr)_370px]">
-          <section className="min-w-0 space-y-4">
-            <div className="panel-card bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(241,245,249,0.88))]">
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <div>
-                  <p className="section-label text-sky-700">{copy.mapArena}</p>
-                  <h2 className="mt-1 text-2xl font-semibold text-slate-950">
-                    {mode === 'click' ? copy.findByTouch : copy.nameByShape}
-                  </h2>
-                </div>
-                <div className="rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-white">
-                  {mode === 'click' ? copy.noHintMode : copy.guidedSilhouette}
-                </div>
+        <div className="grid gap-4 xl:grid-cols-[minmax(0,1.95fr)_minmax(320px,390px)]">
+          <section className="atlas-map-panel">
+            <div className="atlas-panel-header">
+              <div>
+                <p className="section-label text-slate-500">{copy.mapArena}</p>
+                <h2 className="mt-1 text-2xl font-semibold text-slate-950">
+                  {mode === 'click' ? copy.findByTouch : copy.nameByShape}
+                </h2>
               </div>
+              <div className="flex flex-wrap gap-2">
+                <span className="atlas-stat-chip">{copy.noReveal}</span>
+                <span className="atlas-stat-chip">{copy.selectionPinned}</span>
+              </div>
+            </div>
 
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-sm text-slate-600">
+              <p>{mode === 'click' ? copy.selectMatchingPlace : copy.useShapeCue}</p>
+              <p className="font-medium text-slate-500">
+                {mode === 'click' ? copy.noHintMode : copy.guidedSilhouette}
+              </p>
+            </div>
+
+            <div className="mt-4 min-h-[460px] lg:min-h-[calc(100vh-16.5rem)]">
               <WorldMap
-                key={`${regionLabel}-${mode}-${language}`}
+                key={`${regionLabel}-${mode}-${language}-${current?.id ?? 'complete'}`}
                 filter={regionFilter}
                 mode={mode}
                 highlightedId={highlightedId}
@@ -122,6 +125,7 @@ export default function QuizScreen() {
                 currentItemId={current?.id}
                 showMountains={showMountains}
                 selectedFeatureId={mapFocusId}
+                preferredFocusId={mapFocusId}
                 onSelectFeature={(selection) => {
                   setSelectedFeature(selection);
                   setSelectionQuestionIndex(currentIndex);
@@ -137,40 +141,42 @@ export default function QuizScreen() {
                     : undefined
                 }
                 showLabels={false}
+                fillHeight
               />
             </div>
           </section>
 
-          <aside className="space-y-4 xl:sticky xl:top-5 xl:self-start">
-            <section className="panel-card bg-[linear-gradient(160deg,rgba(15,23,42,0.96),rgba(30,41,59,0.96))] text-white shadow-[0_24px_80px_rgba(15,23,42,0.35)]">
+          <aside className="atlas-rail">
+            <section className="atlas-side-card atlas-side-dark">
               <p className="section-label text-blue-200">{mode === 'click' ? copy.tapQuiz : copy.typeChallenge}</p>
-              <QuizProgress />
+              <div className="mt-3">
+                <QuizProgress />
+              </div>
             </section>
 
-            <section className="panel-card bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(248,250,252,0.92))]">
+            <section className="atlas-side-card">
               <QuizPrompt />
               <QuizInput key={currentIndex} />
               <QuizFeedback />
             </section>
 
-            <section className="panel-card relative overflow-hidden bg-[linear-gradient(145deg,rgba(255,251,235,0.94),rgba(255,255,255,0.96))]">
-              <div className="absolute right-0 top-0 h-20 w-24 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.25),transparent_65%)]" />
+            <section className="atlas-side-card atlas-side-soft">
               <p className="section-label text-amber-700">{copy.mapSelection}</p>
               <h2 className="mt-1 text-xl font-semibold text-slate-950">{copy.touchDetails}</h2>
               {localizedSelection ? (
-                <div className="relative mt-4 space-y-4">
+                <div className="mt-4 space-y-4">
                   <div className="flex items-center gap-3">
                     {localizedSelection.flag && (
                       <span className="flex h-14 w-14 items-center justify-center rounded-[20px] bg-white text-3xl shadow-sm">
                         {localizedSelection.flag}
                       </span>
                     )}
-                    <div>
+                    <div className="min-w-0">
                       <h3 className="text-2xl font-semibold text-slate-950">{localizedSelection.name}</h3>
                       <p className="text-sm uppercase tracking-[0.2em] text-slate-500">{getMapKindLabel(localizedSelection.kind, language)}</p>
                     </div>
                   </div>
-                  <div className="rounded-[22px] border border-white/80 bg-white/80 px-4 py-4 shadow-sm">
+                  <div className="rounded-[22px] border border-white/80 bg-white/88 px-4 py-4 shadow-sm">
                     <p className="text-sm leading-6 text-slate-700">{localizedSelection.detail}</p>
                     {localizedSelection.secondaryDetail && (
                       <p className="mt-2 text-sm text-slate-500">{localizedSelection.secondaryDetail}</p>
@@ -178,10 +184,8 @@ export default function QuizScreen() {
                   </div>
                 </div>
               ) : (
-                <div className="relative mt-4 rounded-[22px] border border-dashed border-amber-200 bg-white/70 px-4 py-5">
-                  <p className="text-sm leading-6 text-slate-600">
-                    {copy.tapMapToInspect}
-                  </p>
+                <div className="mt-4 rounded-[22px] border border-dashed border-amber-200 bg-white/72 px-4 py-5">
+                  <p className="text-sm leading-6 text-slate-600">{copy.tapMapToInspect}</p>
                 </div>
               )}
             </section>

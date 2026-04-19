@@ -56,6 +56,50 @@ export type StudyTab = 'free' | 'guided';
 
 export type QuizItemType = 'country' | 'sea';
 export type MapFeatureKind = 'country' | 'sea' | 'mountain';
+export type MapFocusZoneId =
+  | 'world'
+  | 'europe-overview'
+  | 'south-america-overview'
+  | 'oceania-overview'
+  | 'north-america-overview'
+  | 'north-america-caribbean'
+  | 'africa-overview'
+  | 'africa-atlantic-islands'
+  | 'africa-indian-ocean-islands'
+  | 'asia-overview'
+  | 'asia-west'
+  | 'asia-central'
+  | 'asia-south'
+  | 'asia-east'
+  | 'asia-southeast-mainland'
+  | 'asia-southeast-maritime';
+
+export interface MapViewport {
+  center: [number, number];
+  zoom: number;
+}
+
+export interface MapFocusZone {
+  id: MapFocusZoneId;
+  parentId: MapFocusZoneId | null;
+  labelKey: string;
+  viewport: MapViewport;
+  countryIds: string[];
+  hitAreaCountryIds?: string[];
+}
+
+export interface MapCalloutConfig {
+  id: string;
+  zoneId: MapFocusZoneId;
+  targetZoneId: MapFocusZoneId;
+  labelKey: string;
+  subject: [number, number];
+  dx: number;
+  dy: number;
+  countryIds: string[];
+  width?: number;
+  height?: number;
+}
 
 export interface QuizItem {
   id: string;

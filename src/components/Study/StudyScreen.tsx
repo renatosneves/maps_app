@@ -112,22 +112,24 @@ export default function StudyScreen() {
   }, [recentUnlocks]);
 
   return (
-    <div className="mx-auto max-w-[1760px] px-3 py-3 sm:px-4 lg:h-screen lg:max-h-screen lg:px-5 lg:py-4">
-      <div className="rounded-[34px] border border-white/65 bg-[linear-gradient(135deg,rgba(248,250,252,0.97),rgba(239,246,255,0.98))] p-3.5 shadow-[0_30px_120px_rgba(15,23,42,0.12)] sm:p-4 lg:flex lg:h-full lg:flex-col lg:overflow-hidden">
-        <div className="mb-3 grid gap-3 xl:grid-cols-[minmax(0,1.4fr)_minmax(320px,0.72fr)_minmax(320px,0.82fr)] xl:items-start lg:mb-2 lg:shrink-0">
-          <div className="flex min-w-0 flex-wrap items-center gap-2.5">
+    <div className="mx-auto max-w-[1820px] px-3 py-3 sm:px-4 lg:px-5 lg:py-4">
+      <div className="atlas-shell">
+        <header className="atlas-header">
+          <div className="flex min-w-0 flex-wrap items-center gap-3">
             <button
               type="button"
               onClick={goHome}
-              className="touch-secondary min-h-[2.85rem] rounded-[1rem] px-4 py-2.5 text-[0.95rem]"
+              className="touch-secondary min-h-[2.9rem] rounded-[1rem] px-4 py-2.5 text-[0.95rem]"
             >
-            {copy.back}
+              {copy.back}
             </button>
-            <div className="min-w-0 pr-2">
+            <div className="min-w-0">
               <p className="section-label">{copy.studyPlayground}</p>
-              <h1 className="font-display mt-1 text-2xl text-slate-950 sm:text-[2rem]">{regionLabel}</h1>
+              <h1 className="font-display mt-1 text-3xl text-slate-950 sm:text-[2.6rem]">{regionLabel}</h1>
             </div>
-            <div className="flex min-w-0 flex-wrap items-center gap-2">
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
               onClick={() => setTab('free')}
@@ -162,175 +164,185 @@ export default function StudyScreen() {
               {showMountains ? copy.hideMountains : copy.showMountains}
             </button>
           </div>
-          </div>
-          <div className="min-h-[126px] min-w-0 rounded-[24px] border border-slate-200/80 bg-[linear-gradient(145deg,rgba(15,23,42,0.96),rgba(30,41,59,0.96))] px-4 py-3 text-white shadow-[0_18px_50px_rgba(15,23,42,0.18)]">
-            <div className="flex items-center justify-between gap-3">
-              <p className="section-label text-blue-200">{copy.progression}</p>
-              <span className="rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-amber-300">
-                ⭐ {stars}
-              </span>
-            </div>
-            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/12">
-              <div
-                className="h-full rounded-full bg-[linear-gradient(90deg,#60a5fa,#fbbf24)] transition-[width] duration-300"
-                style={{ width: `${completionPercent}%` }}
-              />
-            </div>
-            <div className="mt-2 flex items-end justify-between gap-4">
+        </header>
+
+        <div className="grid gap-4 xl:grid-cols-[minmax(0,1.95fr)_minmax(320px,390px)]">
+          <section className="atlas-map-panel">
+            <div className="atlas-panel-header">
               <div>
-                <p className="text-[11px] uppercase tracking-[0.2em] text-blue-200">{copy.mastery}</p>
-                <p className="mt-1 text-xl font-bold">{completionPercent}%</p>
+                <p className="section-label text-slate-500">{copy.mapArena}</p>
+                <h2 className="mt-1 text-2xl font-semibold text-slate-950">{copy.studyPlayground}</h2>
               </div>
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.2em] text-blue-200">{copy.known}</p>
-                <p className="mt-1 text-xl font-bold">{knownCount}/{totalCount}</p>
+              <div className="flex flex-wrap gap-2">
+                <span className="atlas-stat-chip">⭐ {stars}</span>
+                <span className="atlas-stat-chip">{knownCount}/{totalCount} {copy.known.toLowerCase()}</span>
+                <span className="atlas-stat-chip">{completionPercent}% {copy.mastery.toLowerCase()}</span>
               </div>
-              <div className="max-w-[180px]">
-                <p className="text-[11px] uppercase tracking-[0.2em] text-blue-200">{copy.next}</p>
-                <p className="mt-1 text-xs leading-4 text-white/90">
-                  {nextMilestone
-                    ? `${nextMilestone.label} · ${nextMilestone.remaining} ${copy.left}`
-                    : copy.completeHere}
+            </div>
+
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-sm text-slate-600">
+              <p>{copy.inspectAndMark}</p>
+              {nextMilestone && (
+                <p className="font-medium text-slate-500">
+                  {nextMilestone.label} · {nextMilestone.remaining} {copy.left}
                 </p>
-              </div>
-            </div>
-          </div>
-          <div className="min-h-[126px] min-w-0 rounded-[24px] border border-amber-200/70 bg-[linear-gradient(145deg,rgba(255,251,235,0.98),rgba(255,255,255,0.98))] px-4 py-3 shadow-[0_12px_34px_rgba(245,158,11,0.08)]">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="section-label text-amber-700">{copy.badgeShelf}</p>
-                <p className="mt-1 text-sm font-semibold text-slate-900">{copy.regionRewards}</p>
-              </div>
-              <span className="rounded-full bg-amber-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-amber-700">
-                {regionBadges.length} {copy.earned}
-              </span>
-            </div>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {regionBadges.length > 0 ? (
-                regionBadges.slice(0, 2).map((badge) => {
-                  const localizedBadge = getLocalizedBadge(badge, language);
-                  return (
-                    <div key={badge.id} className="min-w-0 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5">
-                      <div className="flex items-center gap-2">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-amber-200 text-xs">🏅</span>
-                        <span className="max-w-[120px] truncate text-xs font-semibold text-slate-900">{localizedBadge.title}</span>
-                      </div>
-                    </div>
-                  );
-                })
-              ) : (
-                <p className="text-sm leading-5 text-slate-500">{copy.unlockBadgesHint}</p>
               )}
             </div>
-          </div>
-        </div>
 
-        <div className={`grid gap-3 lg:shrink-0 ${tab === 'guided' ? 'xl:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]' : 'xl:grid-cols-[minmax(0,1fr)]'}`}>
-          {tab === 'guided' && <GuidedPanel compact />}
-
-          <section className="panel-card bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,247,251,0.94))] px-4 py-3">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="section-label">{copy.selectedOnMap}</p>
-                <h2 className="mt-1 text-lg font-semibold text-slate-950">{copy.quickDetail}</h2>
-              </div>
+            <div className="mt-4 min-h-[460px] lg:min-h-[calc(100vh-16.5rem)]">
+              <WorldMap
+                key={`${regionKey}-${language}-${tab}-${tab === 'guided' ? guidedHighlightId ?? 'guided' : 'free'}`}
+                filter={regionFilter}
+                mode="study"
+                highlightedId={null}
+                feedbackState="none"
+                correctAnswerId={null}
+                knownIds={knownIds}
+                guidedHighlightId={guidedHighlightId}
+                showMountains={showMountains}
+                selectedFeatureId={activeSelection?.id ?? guidedHighlightId ?? null}
+                preferredFocusId={guidedHighlightId ?? activeSelection?.id ?? null}
+                onSelectFeature={setSelectedFeature}
+                showLabels={false}
+                fillHeight
+              />
             </div>
-
-            {localizedSelection ? (
-              <div className="mt-3 flex flex-wrap items-center gap-3">
-                {localizedSelection.flag && (
-                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-2xl shadow-sm">
-                    {localizedSelection.flag}
-                  </span>
-                )}
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                    <h3 className="text-lg font-semibold text-slate-950">{localizedSelection.name}</h3>
-                    <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
-                      {getMapKindLabel(localizedSelection.kind, language)}
-                    </p>
-                  </div>
-                  <p className="mt-1 text-sm leading-5 text-slate-700">{localizedSelection.detail}</p>
-                  {localizedSelection.secondaryDetail && (
-                    <p className="mt-1 text-sm text-slate-500">{localizedSelection.secondaryDetail}</p>
-                  )}
-                </div>
-                {(localizedSelection.kind === 'country' || localizedSelection.kind === 'sea') && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!selectionKnown) {
-                        playEffect('mark-known');
-                      }
-                      toggleKnown(localizedSelection.id, regionFilter);
-                    }}
-                    className={selectionKnown ? 'touch-secondary justify-center max-xl:w-full lg:min-h-[2.9rem] lg:px-4 lg:py-3' : 'touch-primary justify-center max-xl:w-full lg:min-h-[2.9rem] lg:px-4 lg:py-3'}
-                  >
-                    {selectionKnown ? copy.markStillLearning : copy.markKnown}
-                  </button>
-                )}
-              </div>
-            ) : (
-              <div className="mt-3 rounded-[20px] border border-dashed border-slate-200 bg-white/75 px-4 py-3">
-                <p className="text-sm leading-5 text-slate-500">
-                  {copy.tapToPinDetails}
-                </p>
-              </div>
-            )}
           </section>
-        </div>
 
-        <section className="mt-3 space-y-2.5 lg:mt-2 lg:flex lg:min-h-0 lg:flex-1 lg:flex-col">
-          <div className="lg:shrink-0">
-            <p className="text-sm text-slate-500">
-              {copy.inspectAndMark}
-            </p>
-          </div>
+          <aside className="atlas-rail">
+            <section className="atlas-side-card atlas-side-dark">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="section-label text-blue-200">{copy.progression}</p>
+                  <h2 className="mt-2 text-3xl font-semibold text-white">{completionPercent}%</h2>
+                </div>
+                <span className="rounded-full bg-white/10 px-3 py-1 text-sm font-semibold text-amber-300">
+                  ⭐ {stars}
+                </span>
+              </div>
+              <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/10">
+                <div
+                  className="h-full rounded-full bg-[linear-gradient(90deg,#60a5fa,#fbbf24)] transition-[width] duration-300"
+                  style={{ width: `${completionPercent}%` }}
+                />
+              </div>
+              <div className="mt-4 flex items-end justify-between gap-4 text-sm text-slate-200">
+                <div>
+                  <p className="section-label text-blue-200">{copy.known}</p>
+                  <p className="mt-1 text-xl font-bold text-white">{knownCount}/{totalCount}</p>
+                </div>
+                <div className="max-w-[180px] text-right">
+                  <p className="section-label text-blue-200">{copy.next}</p>
+                  <p className="mt-1 leading-5">
+                    {nextMilestone
+                      ? `${nextMilestone.label} · ${nextMilestone.remaining} ${copy.left}`
+                      : copy.completeHere}
+                  </p>
+                </div>
+              </div>
+            </section>
 
-          <div className="lg:min-h-0 lg:flex-1">
-            <WorldMap
-              key={`${regionKey}-${language}`}
-              filter={regionFilter}
-              mode="study"
-              highlightedId={null}
-              feedbackState="none"
-              correctAnswerId={null}
-              knownIds={knownIds}
-              guidedHighlightId={guidedHighlightId}
-              showMountains={showMountains}
-              selectedFeatureId={activeSelection?.id ?? guidedHighlightId ?? null}
-              onSelectFeature={setSelectedFeature}
-              showLabels
-              fillHeight
-            />
-          </div>
+            {tab === 'guided' && <GuidedPanel compact />}
 
-          {recentUnlocks.length > 0 && (
-            <div className="grid gap-3 md:grid-cols-2 lg:shrink-0">
-              {recentUnlocks.slice(0, 1).map((unlock) => {
-                const localizedUnlock = getLocalizedUnlock(unlock, language);
-                return (
-                  <div key={unlock.id} className="panel-card flex items-start justify-between gap-3 bg-[linear-gradient(145deg,rgba(255,251,235,0.98),rgba(255,255,255,0.98))] px-4 py-4 lg:px-3.5 lg:py-3">
-                    <div>
-                      <p className="section-label text-amber-700">
-                        {unlock.kind === 'star' ? copy.newStars : copy.badgeUnlocked}
-                      </p>
-                      <h3 className="mt-1 text-base font-semibold text-slate-900">{localizedUnlock.title}</h3>
-                      <p className="mt-1 text-sm leading-5 text-slate-600">{localizedUnlock.description}</p>
+            <section className="atlas-side-card">
+              <p className="section-label">{copy.selectedOnMap}</p>
+              <h2 className="mt-1 text-xl font-semibold text-slate-950">{copy.quickDetail}</h2>
+
+              {localizedSelection ? (
+                <div className="mt-4 space-y-4">
+                  <div className="flex items-center gap-3">
+                    {localizedSelection.flag && (
+                      <span className="flex h-14 w-14 items-center justify-center rounded-[20px] bg-white text-3xl shadow-sm">
+                        {localizedSelection.flag}
+                      </span>
+                    )}
+                    <div className="min-w-0">
+                      <h3 className="text-2xl font-semibold text-slate-950">{localizedSelection.name}</h3>
+                      <p className="text-sm uppercase tracking-[0.2em] text-slate-500">{getMapKindLabel(localizedSelection.kind, language)}</p>
                     </div>
+                  </div>
+
+                  <div className="rounded-[22px] border border-slate-200/80 bg-white/90 px-4 py-4 shadow-sm">
+                    <p className="text-sm leading-6 text-slate-700">{localizedSelection.detail}</p>
+                    {localizedSelection.secondaryDetail && (
+                      <p className="mt-2 text-sm text-slate-500">{localizedSelection.secondaryDetail}</p>
+                    )}
+                  </div>
+
+                  {(localizedSelection.kind === 'country' || localizedSelection.kind === 'sea') && (
                     <button
                       type="button"
-                      onClick={() => dismissUnlock(unlock.id)}
-                      className="rounded-full border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-500"
+                      onClick={() => {
+                        if (!selectionKnown) {
+                          playEffect('mark-known');
+                        }
+                        toggleKnown(localizedSelection.id, regionFilter);
+                      }}
+                      className={selectionKnown ? 'touch-secondary w-full justify-center' : 'touch-primary w-full justify-center'}
                     >
-                      {copy.dismiss}
+                      {selectionKnown ? copy.markStillLearning : copy.markKnown}
                     </button>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </section>
+                  )}
+                </div>
+              ) : (
+                <div className="mt-4 rounded-[22px] border border-dashed border-slate-200 bg-white/75 px-4 py-5">
+                  <p className="text-sm leading-6 text-slate-500">{copy.tapToPinDetails}</p>
+                </div>
+              )}
+            </section>
+
+            <section className="atlas-side-card atlas-side-soft">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="section-label text-amber-700">{copy.badgeShelf}</p>
+                  <h2 className="mt-1 text-xl font-semibold text-slate-950">{copy.regionRewards}</h2>
+                </div>
+                <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-amber-700">
+                  {regionBadges.length} {copy.earned}
+                </span>
+              </div>
+
+              <div className="mt-4 flex flex-wrap gap-2">
+                {regionBadges.length > 0 ? (
+                  regionBadges.slice(0, 3).map((badge) => {
+                    const localizedBadge = getLocalizedBadge(badge, language);
+                    return (
+                      <div key={badge.id} className="rounded-full border border-amber-200 bg-amber-50 px-3 py-2 text-sm font-semibold text-slate-900">
+                        {localizedBadge.title}
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p className="text-sm leading-6 text-slate-500">{copy.unlockBadgesHint}</p>
+                )}
+              </div>
+
+              {recentUnlocks.length > 0 && (
+                <div className="mt-4 space-y-3">
+                  {recentUnlocks.slice(0, 1).map((unlock) => {
+                    const localizedUnlock = getLocalizedUnlock(unlock, language);
+                    return (
+                      <div key={unlock.id} className="rounded-[22px] border border-white/80 bg-white/86 px-4 py-4 shadow-sm">
+                        <p className="section-label text-amber-700">
+                          {unlock.kind === 'star' ? copy.newStars : copy.badgeUnlocked}
+                        </p>
+                        <h3 className="mt-2 text-base font-semibold text-slate-900">{localizedUnlock.title}</h3>
+                        <p className="mt-1 text-sm leading-5 text-slate-600">{localizedUnlock.description}</p>
+                        <button
+                          type="button"
+                          onClick={() => dismissUnlock(unlock.id)}
+                          className="mt-3 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-500"
+                        >
+                          {copy.dismiss}
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </section>
+          </aside>
+        </div>
       </div>
     </div>
   );
