@@ -15,7 +15,7 @@ import { getRegionKey, getRegionLabel } from '../../utils/regions';
 import WorldMap from '../Map/WorldMap';
 import GuidedPanel from './GuidedPanel';
 
-export default function StudyScreen() {
+export default function StudyScreen({ isMobile = false }: { isMobile?: boolean }) {
   const { regionFilter, goHome, language } = useAppStore();
   const {
     knownIds,
@@ -112,7 +112,7 @@ export default function StudyScreen() {
   }, [recentUnlocks]);
 
   return (
-    <div className="mx-auto max-w-[1820px] px-3 py-3 sm:px-4 lg:px-5 lg:py-4">
+    <div className={`mx-auto max-w-[1820px] px-3 sm:px-4 lg:px-5 ${isMobile ? 'pb-6 pt-2' : 'py-3 lg:py-4'}`}>
       <div className="atlas-shell">
         <header className="atlas-header">
           <div className="flex min-w-0 flex-wrap items-center gap-3">
@@ -166,7 +166,7 @@ export default function StudyScreen() {
           </div>
         </header>
 
-        <div className="grid gap-4 xl:grid-cols-[minmax(0,1.95fr)_minmax(320px,390px)]">
+        <div className={`grid gap-4 ${isMobile ? '' : 'xl:grid-cols-[minmax(0,1.95fr)_minmax(320px,390px)]'}`}>
           <section className="atlas-map-panel">
             <div className="atlas-panel-header">
               <div>
@@ -183,13 +183,13 @@ export default function StudyScreen() {
             <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-sm text-slate-600">
               <p>{copy.inspectAndMark}</p>
               {nextMilestone && (
-                <p className="font-medium text-slate-500">
+                <p className={`font-medium text-slate-500 ${isMobile ? 'w-full' : ''}`}>
                   {nextMilestone.label} · {nextMilestone.remaining} {copy.left}
                 </p>
               )}
             </div>
 
-            <div className="mt-4 min-h-[460px] lg:min-h-[calc(100vh-16.5rem)]">
+            <div className={`mt-4 ${isMobile ? 'min-h-[360px]' : 'min-h-[460px] lg:min-h-[calc(100vh-16.5rem)]'}`}>
               <WorldMap
                 key={`${regionKey}-${language}-${tab}-${tab === 'guided' ? guidedHighlightId ?? 'guided' : 'free'}`}
                 filter={regionFilter}
@@ -205,6 +205,7 @@ export default function StudyScreen() {
                 onSelectFeature={setSelectedFeature}
                 showLabels={false}
                 fillHeight
+                compactControls={isMobile}
               />
             </div>
           </section>

@@ -11,7 +11,7 @@ import QuizInput from './QuizInput';
 import QuizProgress from './QuizProgress';
 import QuizPrompt from './QuizPrompt';
 
-export default function QuizScreen() {
+export default function QuizScreen({ isMobile = false }: { isMobile?: boolean }) {
   const { regionFilter, goHome, language } = useAppStore();
   const {
     items,
@@ -58,7 +58,7 @@ export default function QuizScreen() {
   }, [currentIndex, mode, selectedFeature, selectionQuestionIndex]);
 
   return (
-    <div className="mx-auto max-w-[1820px] px-3 py-3 sm:px-4 lg:px-5 lg:py-4">
+    <div className={`mx-auto max-w-[1820px] px-3 sm:px-4 lg:px-5 ${isMobile ? 'pb-6 pt-2' : 'py-3 lg:py-4'}`}>
       <div className="atlas-shell">
         <header className="atlas-header">
           <div className="flex min-w-0 flex-wrap items-center gap-3">
@@ -93,7 +93,7 @@ export default function QuizScreen() {
           </div>
         </header>
 
-        <div className="grid gap-4 xl:grid-cols-[minmax(0,1.95fr)_minmax(320px,390px)]">
+        <div className={`grid gap-4 ${isMobile ? '' : 'xl:grid-cols-[minmax(0,1.95fr)_minmax(320px,390px)]'}`}>
           <section className="atlas-map-panel">
             <div className="atlas-panel-header">
               <div>
@@ -110,12 +110,12 @@ export default function QuizScreen() {
 
             <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-sm text-slate-600">
               <p>{mode === 'click' ? copy.selectMatchingPlace : copy.useShapeCue}</p>
-              <p className="font-medium text-slate-500">
+              <p className={`font-medium text-slate-500 ${isMobile ? 'w-full' : ''}`}>
                 {mode === 'click' ? copy.noHintMode : copy.guidedSilhouette}
               </p>
             </div>
 
-            <div className="mt-4 min-h-[460px] lg:min-h-[calc(100vh-16.5rem)]">
+            <div className={`mt-4 ${isMobile ? 'min-h-[360px]' : 'min-h-[460px] lg:min-h-[calc(100vh-16.5rem)]'}`}>
               <WorldMap
                 key={`${regionLabel}-${mode}-${language}-${current?.id ?? 'complete'}`}
                 filter={regionFilter}
@@ -143,6 +143,7 @@ export default function QuizScreen() {
                 }
                 showLabels={false}
                 fillHeight
+                compactControls={isMobile}
               />
             </div>
           </section>

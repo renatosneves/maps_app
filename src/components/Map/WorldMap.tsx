@@ -69,6 +69,7 @@ interface WorldMapProps {
   onFocusZoneChange?: (zone: MapFocusZoneId | null) => void;
   showLabels?: boolean;
   fillHeight?: boolean;
+  compactControls?: boolean;
 }
 
 function buildCountrySelection(geoId: string, language: 'sv' | 'en'): MapSelection | null {
@@ -163,6 +164,7 @@ function WorldMap({
   onFocusZoneChange,
   showLabels = false,
   fillHeight = false,
+  compactControls = false,
 }: WorldMapProps) {
   const { language } = useAppStore();
   const copy = ui[language];
@@ -231,7 +233,7 @@ function WorldMap({
   return (
     <div className={fillHeight ? 'map-stage map-stage-fill atlas-stage atlas-stage-layout' : 'map-stage atlas-stage atlas-stage-layout'}>
       <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-24 bg-[linear-gradient(180deg,rgba(255,252,245,0.9),transparent)]" />
-      <div className="atlas-map-toolbar">
+      <div className={`atlas-map-toolbar ${compactControls ? 'atlas-map-toolbar-compact' : ''}`}>
         <div className="atlas-map-toolbar-actions">
           <button
             type="button"
@@ -243,7 +245,7 @@ function WorldMap({
                   zoom: Math.min(6.2, viewport.zoom + 0.26),
                 },
               }))}
-            className="map-control"
+            className={`map-control ${compactControls ? 'map-control-compact' : ''}`}
             aria-label={copy.zoomIn}
           >
             +
@@ -258,7 +260,7 @@ function WorldMap({
                   zoom: Math.max(1, viewport.zoom - 0.26),
                 },
               }))}
-            className="map-control"
+            className={`map-control ${compactControls ? 'map-control-compact' : ''}`}
             aria-label={copy.zoomOut}
           >
             −
@@ -266,7 +268,7 @@ function WorldMap({
           <button
             type="button"
             onClick={resetMapView}
-            className="map-control px-4 text-[11px] font-semibold uppercase tracking-[0.22em]"
+            className={`map-control px-4 text-[11px] font-semibold uppercase tracking-[0.22em] ${compactControls ? 'map-control-compact' : ''}`}
           >
             {copy.reset}
           </button>
